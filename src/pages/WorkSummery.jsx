@@ -58,7 +58,7 @@ const WorkSummary = () => {
     return (
         <div className="p-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
-                <h2 className="text-2xl font-semibold">Work Summary Dashboard</h2>
+                <h2 className="text-2xl font-semibold"></h2>
 
                 {/* Date Range Selector */}
                 <div className="flex gap-2 items-center">
@@ -110,7 +110,7 @@ const WorkSummary = () => {
                         <h3 className="text-lg font-semibold">Hours by Data Center</h3>
                         <button
                             onClick={() => navigate("/work-summary/datacenters")}
-                            className="text-sm text-indigo-600 hover:underline"
+                            className="text-sm text-green-600 hover:underline"
                         >
                             View All
                         </button>
@@ -132,7 +132,7 @@ const WorkSummary = () => {
                         <h3 className="text-lg font-semibold">Hours by Client</h3>
                         <button
                             onClick={() => navigate("/work-summary/clients")}
-                            className="text-sm text-indigo-600 hover:underline"
+                            className="text-sm text-green-600 hover:underline"
                         >
                             View All
                         </button>
@@ -167,7 +167,7 @@ const WorkSummary = () => {
                     <h3 className="text-lg font-semibold">Work by Field Technician</h3>
                     <button
                         onClick={() => navigate("/work-summary/technicians")}
-                        className="text-sm text-indigo-600 hover:underline"
+                        className="text-sm text-green-600 hover:underline"
                     >
                         View All
                     </button>

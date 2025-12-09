@@ -9,313 +9,158 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-// Later you can create this component like AddDataCenter
-// For now we just use a placeholder
 import AddTechnician from "../components/ui/AddTechnician";
 import Pagination from "@/components/ui/Pagination";
+import ConfirmDialog from "@/components/ui/ConfirmDialog";
 
 export default function FieldTechnicians() {
   const [technicians, setTechnicians] = useState([
-    {
-      id: "FT1001",
-      name: "John Doe",
-      email: "john.doe@example.com",
-      dataCenters: ["NYC Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1002",
-      name: "Jane Smith",
-      email: "jane.smith@example.com",
-      dataCenters: ["SFO Data Center", "London Data Center", "Singapore Data Center", "Tokyo Data Center"],
-      status: "Inactive",
-    },
-    {
-      id: "FT1003",
-      name: "Michael Brown",
-      email: "michael.brown@example.com",
-      dataCenters: ["Chicago Data Center", "NYC Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1004",
-      name: "Emily Johnson",
-      email: "emily.johnson@example.com",
-      dataCenters: ["LA Data Center", "London Data Center", "Berlin Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1005",
-      name: "William Davis",
-      email: "william.davis@example.com",
-      dataCenters: ["Paris Data Center"],
-      status: "Inactive",
-    },
-    {
-      id: "FT1006",
-      name: "Olivia Martinez",
-      email: "olivia.martinez@example.com",
-      dataCenters: ["Tokyo Data Center", "Singapore Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1007",
-      name: "James Wilson",
-      email: "james.wilson@example.com",
-      dataCenters: ["NYC Data Center", "Chicago Data Center", "LA Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1008",
-      name: "Sophia Anderson",
-      email: "sophia.anderson@example.com",
-      dataCenters: ["London Data Center"],
-      status: "Inactive",
-    },
-    {
-      id: "FT1009",
-      name: "Benjamin Thomas",
-      email: "benjamin.thomas@example.com",
-      dataCenters: ["Singapore Data Center", "Tokyo Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1010",
-      name: "Isabella Jackson",
-      email: "isabella.jackson@example.com",
-      dataCenters: ["Berlin Data Center", "Paris Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1011",
-      name: "Alexander White",
-      email: "alexander.white@example.com",
-      dataCenters: ["NYC Data Center", "London Data Center", "Tokyo Data Center"],
-      status: "Inactive",
-    },
-    {
-      id: "FT1012",
-      name: "Mia Harris",
-      email: "mia.harris@example.com",
-      dataCenters: ["Chicago Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1013",
-      name: "Daniel Martin",
-      email: "daniel.martin@example.com",
-      dataCenters: ["SFO Data Center", "LA Data Center", "Paris Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1014",
-      name: "Charlotte Lee",
-      email: "charlotte.lee@example.com",
-      dataCenters: ["Singapore Data Center", "Berlin Data Center"],
-      status: "Inactive",
-    },
-    {
-      id: "FT1015",
-      name: "Henry Walker",
-      email: "henry.walker@example.com",
-      dataCenters: ["NYC Data Center", "Tokyo Data Center", "London Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1016",
-      name: "Amelia Hall",
-      email: "amelia.hall@example.com",
-      dataCenters: ["LA Data Center", "Chicago Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1017",
-      name: "Ethan Allen",
-      email: "ethan.allen@example.com",
-      dataCenters: ["Paris Data Center", "Berlin Data Center", "Tokyo Data Center"],
-      status: "Inactive",
-    },
-    {
-      id: "FT1018",
-      name: "Harper Young",
-      email: "harper.young@example.com",
-      dataCenters: ["SFO Data Center", "NYC Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1019",
-      name: "Lucas King",
-      email: "lucas.king@example.com",
-      dataCenters: ["London Data Center", "Singapore Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1020",
-      name: "Ella Wright",
-      email: "ella.wright@example.com",
-      dataCenters: ["Berlin Data Center", "LA Data Center"],
-      status: "Inactive",
-    },
-    {
-      id: "FT1021",
-      name: "Sebastian Scott",
-      email: "sebastian.scott@example.com",
-      dataCenters: ["Tokyo Data Center", "NYC Data Center", "Chicago Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1022",
-      name: "Avery Green",
-      email: "avery.green@example.com",
-      dataCenters: ["Paris Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1023",
-      name: "Jack Adams",
-      email: "jack.adams@example.com",
-      dataCenters: ["SFO Data Center", "London Data Center"],
-      status: "Inactive",
-    },
-    {
-      id: "FT1024",
-      name: "Scarlett Baker",
-      email: "scarlett.baker@example.com",
-      dataCenters: ["Singapore Data Center", "Tokyo Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1025",
-      name: "Matthew Nelson",
-      email: "matthew.nelson@example.com",
-      dataCenters: ["NYC Data Center", "Berlin Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1026",
-      name: "Victoria Carter",
-      email: "victoria.carter@example.com",
-      dataCenters: ["LA Data Center", "Paris Data Center", "SFO Data Center"],
-      status: "Inactive",
-    },
-    {
-      id: "FT1027",
-      name: "David Mitchell",
-      email: "david.mitchell@example.com",
-      dataCenters: ["Tokyo Data Center", "London Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1028",
-      name: "Grace Perez",
-      email: "grace.perez@example.com",
-      dataCenters: ["Singapore Data Center", "NYC Data Center"],
-      status: "Active",
-    },
-    {
-      id: "FT1029",
-      name: "Joseph Roberts",
-      email: "joseph.roberts@example.com",
-      dataCenters: ["Chicago Data Center", "Berlin Data Center", "Paris Data Center"],
-      status: "Inactive",
-    },
-    {
-      id: "FT1030",
-      name: "Lily Turner",
-      email: "lily.turner@example.com",
-      dataCenters: ["LA Data Center", "SFO Data Center", "London Data Center"],
-      status: "Active",
-    },
+    { id: "FT1001", name: "John Doe", email: "john.doe@example.com", dataCenters: ["NYC Data Center"], status: "Active" },
+    { id: "FT1002", name: "Jane Smith", email: "jane.smith@example.com", dataCenters: ["SFO Data Center", "London Data Center", "Singapore Data Center", "Tokyo Data Center"], status: "Inactive" },
+    { id: "FT1003", name: "Michael Brown", email: "michael.brown@example.com", dataCenters: ["Chicago Data Center", "NYC Data Center"], status: "Active" },
+    { id: "FT1004", name: "Emily Johnson", email: "emily.johnson@example.com", dataCenters: ["LA Data Center", "London Data Center", "Berlin Data Center"], status: "Active" },
+    { id: "FT1005", name: "William Davis", email: "william.davis@example.com", dataCenters: ["Paris Data Center"], status: "Inactive" },
+    { id: "FT1006", name: "Olivia Martinez", email: "olivia.martinez@example.com", dataCenters: ["Tokyo Data Center", "Singapore Data Center"], status: "Active" },
+    { id: "FT1007", name: "James Wilson", email: "james.wilson@example.com", dataCenters: ["NYC Data Center", "Chicago Data Center", "LA Data Center"], status: "Active" },
+    { id: "FT1008", name: "Sophia Anderson", email: "sophia.anderson@example.com", dataCenters: ["London Data Center"], status: "Inactive" },
+    { id: "FT1009", name: "Benjamin Thomas", email: "benjamin.thomas@example.com", dataCenters: ["Singapore Data Center", "Tokyo Data Center"], status: "Active" },
+    { id: "FT1010", name: "Isabella Jackson", email: "isabella.jackson@example.com", dataCenters: ["Berlin Data Center", "Paris Data Center"], status: "Active" },
+    { id: "FT1011", name: "Alexander White", email: "alexander.white@example.com", dataCenters: ["NYC Data Center", "London Data Center", "Tokyo Data Center"], status: "Inactive" },
+    { id: "FT1012", name: "Mia Harris", email: "mia.harris@example.com", dataCenters: ["Chicago Data Center"], status: "Active" },
+    { id: "FT1013", name: "Daniel Martin", email: "daniel.martin@example.com", dataCenters: ["SFO Data Center", "LA Data Center", "Paris Data Center"], status: "Active" },
+    { id: "FT1014", name: "Charlotte Lee", email: "charlotte.lee@example.com", dataCenters: ["Singapore Data Center", "Berlin Data Center"], status: "Inactive" },
+    { id: "FT1015", name: "Henry Walker", email: "henry.walker@example.com", dataCenters: ["NYC Data Center", "Tokyo Data Center", "London Data Center"], status: "Active" },
+    { id: "FT1016", name: "Amelia Hall", email: "amelia.hall@example.com", dataCenters: ["LA Data Center", "Chicago Data Center"], status: "Active" },
+    { id: "FT1017", name: "Ethan Allen", email: "ethan.allen@example.com", dataCenters: ["Paris Data Center", "Berlin Data Center", "Tokyo Data Center"], status: "Inactive" },
+    { id: "FT1018", name: "Harper Young", email: "harper.young@example.com", dataCenters: ["SFO Data Center", "NYC Data Center"], status: "Active" },
+    { id: "FT1019", name: "Lucas King", email: "lucas.king@example.com", dataCenters: ["London Data Center", "Singapore Data Center"], status: "Active" },
+    { id: "FT1020", name: "Ella Wright", email: "ella.wright@example.com", dataCenters: ["Berlin Data Center", "LA Data Center"], status: "Inactive" },
+    { id: "FT1021", name: "Sebastian Scott", email: "sebastian.scott@example.com", dataCenters: ["Tokyo Data Center", "NYC Data Center", "Chicago Data Center"], status: "Active" },
+    { id: "FT1022", name: "Avery Green", email: "avery.green@example.com", dataCenters: ["Paris Data Center"], status: "Active" },
+    { id: "FT1023", name: "Jack Adams", email: "jack.adams@example.com", dataCenters: ["SFO Data Center", "London Data Center"], status: "Inactive" },
+    { id: "FT1024", name: "Scarlett Baker", email: "scarlett.baker@example.com", dataCenters: ["Singapore Data Center", "Tokyo Data Center"], status: "Active" },
+    { id: "FT1025", name: "Matthew Nelson", email: "matthew.nelson@example.com", dataCenters: ["NYC Data Center", "Berlin Data Center"], status: "Active" },
+    { id: "FT1026", name: "Victoria Carter", email: "victoria.carter@example.com", dataCenters: ["LA Data Center", "Paris Data Center", "SFO Data Center"], status: "Inactive" },
+    { id: "FT1027", name: "David Mitchell", email: "david.mitchell@example.com", dataCenters: ["Tokyo Data Center", "London Data Center"], status: "Active" },
+    { id: "FT1028", name: "Grace Perez", email: "grace.perez@example.com", dataCenters: ["Singapore Data Center", "NYC Data Center"], status: "Active" },
+    { id: "FT1029", name: "Joseph Roberts", email: "joseph.roberts@example.com", dataCenters: ["Chicago Data Center", "Berlin Data Center", "Paris Data Center"], status: "Inactive" },
+    { id: "FT1030", name: "Lily Turner", email: "lily.turner@example.com", dataCenters: ["LA Data Center", "SFO Data Center", "London Data Center"], status: "Active" },
   ]);
-
 
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
+
+  // modal/edit state
   const [showModal, setShowModal] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editId, setEditId] = useState(null);
 
   const [newTech, setNewTech] = useState({
     id: "",
     name: "",
     email: "",
-    dataCenters: [], // empty array
+    dataCenters: [],
     status: "Active",
   });
+
+  // confirm dialog state
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confirmPayload, setConfirmPayload] = useState(null); // { id, name, type }
 
   // Filter technicians
   const filteredTechnicians = technicians.filter((tech) => {
     const searchLower = search.toLowerCase();
-
     const matchesSearch =
       tech.name.toLowerCase().includes(searchLower) ||
-      tech.email.toLowerCase().includes(searchLower) ||
-      tech.dataCenters.some((dc) =>
-        dc.toLowerCase().includes(searchLower)
-      ); // ✅ check inside array
-
-    const matchesStatus =
-      statusFilter === "All" || tech.status === statusFilter;
-
+      (tech.email || "").toLowerCase().includes(searchLower) ||
+      (Array.isArray(tech.dataCenters) && tech.dataCenters.some((dc) => dc.toLowerCase().includes(searchLower)));
+    const matchesStatus = statusFilter === "All" || tech.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
 
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentTechnicians = filteredTechnicians.slice(indexOfFirstItem, indexOfLastItem);
 
-  // Add Technician
-  const handleAddTechnician = () => {
-    if (!newTech.id || !newTech.name || !newTech.email) return;
-    setTechnicians([...technicians, newTech]);
-    setNewTech({
-      id: "",
-      name: "",
-      email: "",
-      dataCenters: [],
-      status: "Active",
-    });
+  // Add or update (parent handler used by modal)
+  const handleAddOrUpdateTechnician = () => {
+    // basic validation
+    if (!newTech.name || !newTech.email) {
+      alert("Please provide name and email.");
+      return;
+    }
+
+    if (isEditing && editId) {
+      // update existing
+      setTechnicians((prev) => prev.map((t) => (t.id === editId ? { ...t, ...newTech } : t)));
+    } else {
+      // ensure an id
+      const idToUse = newTech.id && newTech.id.trim() !== "" ? newTech.id : `FT${Date.now().toString().slice(-6)}`;
+      // avoid duplicate id
+      const exists = technicians.some((t) => t.id === idToUse);
+      const finalId = exists ? `FT${Date.now().toString().slice(-6)}${Math.floor(Math.random() * 90 + 10)}` : idToUse;
+      setTechnicians((prev) => [...prev, { ...newTech, id: finalId }]);
+    }
+
+    // reset modal state
+    setNewTech({ id: "", name: "", email: "", dataCenters: [], status: "Active" });
+    setIsEditing(false);
+    setEditId(null);
     setShowModal(false);
+
+    // if adding caused more pages, optionally move to last page (not necessary)
   };
 
-  // Delete Technician
-  const handleDelete = (id) => {
-    setTechnicians(technicians.filter((t) => t.id !== id));
+  // Open edit modal
+  const openEditModal = (tech) => {
+    setIsEditing(true);
+    setEditId(tech.id);
+    // deep copy to avoid direct mutation
+    setNewTech({ ...tech, dataCenters: Array.isArray(tech.dataCenters) ? [...tech.dataCenters] : [] });
+    setShowModal(true);
+  };
+
+  // Open delete confirm
+  const openDeleteConfirm = (tech) => {
+    setConfirmPayload({ id: tech.id, name: tech.name, type: "delete" });
+    setConfirmOpen(true);
+  };
+
+  // Confirmed delete handler
+  const handleDeleteConfirmed = () => {
+    if (!confirmPayload?.id) {
+      setConfirmOpen(false);
+      setConfirmPayload(null);
+      return;
+    }
+
+    const newList = technicians.filter((t) => t.id !== confirmPayload.id);
+    setTechnicians(newList);
+
+    // adjust pagination if current page is now out of range
+    const newTotalPages = Math.max(1, Math.ceil(newList.length / itemsPerPage));
+    if (currentPage > newTotalPages) setCurrentPage(newTotalPages);
+
+    setConfirmOpen(false);
+    setConfirmPayload(null);
   };
 
   // Toggle Status
   const handleToggleStatus = (id) => {
-    setTechnicians(
-      technicians.map((t) =>
-        t.id === id
-          ? { ...t, status: t.status === "Active" ? "Inactive" : "Active" }
-          : t
-      )
-    );
+    setTechnicians((prev) => prev.map((t) => (t.id === id ? { ...t, status: t.status === "Active" ? "Inactive" : "Active" } : t)));
   };
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-
-  // Pagination Logic
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentTechnicians = filteredTechnicians.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-
 
   return (
     <div className="p-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between md:items-center mb-6 gap-3">
-        <h2 className="text-2xl font-semibold capitalize">
-          Field Technicians
-        </h2>
+        <h2 className="text-2xl font-semibold capitalize">Field Technicians</h2>
         <div className="flex gap-2 items-center">
-          <Input
-            placeholder="Search..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="h-10"
-          />
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <Input placeholder="Search..." value={search} onChange={(e) => { setSearch(e.target.value); setCurrentPage(1); }} className="h-10" />
+          <Select value={statusFilter} onValueChange={(val) => { setStatusFilter(val); setCurrentPage(1); }}>
             <SelectTrigger className="h-10 w-[200px] outline-none">
               <SelectValue placeholder="All Status" />
             </SelectTrigger>
@@ -325,13 +170,7 @@ export default function FieldTechnicians() {
               <SelectItem value="Inactive">Inactive</SelectItem>
             </SelectContent>
           </Select>
-          <Button
-            variant="primary"
-            onClick={() => setShowModal(true)}
-            className="w-full h-10"
-          >
-            Add Technician
-          </Button>
+          <Button variant="primary" onClick={() => { setIsEditing(false); setEditId(null); setNewTech({ id: "", name: "", email: "", dataCenters: [], status: "Active" }); setShowModal(true); }} className="w-full h-10">Add Technician</Button>
         </div>
       </div>
 
@@ -350,89 +189,63 @@ export default function FieldTechnicians() {
           </thead>
           <tbody>
             {currentTechnicians.map((tech, idx) => (
-              <tr
-                key={tech.id}
-                className={`border-b ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"
-                  }`}
-              >
+              <tr key={tech.id} className={`border-b ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"}`}>
                 <td className="px-6 py-4 font-medium">{tech.id}</td>
                 <td className="px-6 py-4">{tech.name}</td>
                 <td className="px-6 py-4">{tech.email}</td>
                 <td className="px-6 py-4">
-                  {tech.dataCenters.length > 0 ? (
+                  {tech.dataCenters && tech.dataCenters.length > 0 ? (
                     <>
-                      {tech.dataCenters.slice(0, 2).map((dc, idx) => (
-                        <span
-                          key={idx}
-                          className="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full mr-1"
-                        >
-                          {dc}
-                        </span>
+                      {tech.dataCenters.slice(0, 2).map((dc, i) => (
+                        <span key={i} className="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full mr-1">{dc}</span>
                       ))}
                       {tech.dataCenters.length > 2 && (
-                        <span className="inline-block bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full">
-                          +{tech.dataCenters.length - 2}
-                        </span>
+                        <span className="inline-block bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full">+{tech.dataCenters.length - 2}</span>
                       )}
                     </>
                   ) : (
                     <span className="text-gray-400 text-xs">No Data Centers</span>
                   )}
                 </td>
-
                 <td className="px-6 py-4">
-                  <span
-                    className={`px-2 py-1 rounded-full text-xs font-semibold cursor-pointer ${tech.status === "Active"
-                      ? "bg-green-100 text-green-700"
-                      : "bg-red-100 text-red-700"
-                      }`}
-                    onClick={() => handleToggleStatus(tech.id)}
-                  >
-                    {tech.status}
-                  </span>
+                  <span onClick={() => handleToggleStatus(tech.id)} className={`px-2 py-1 rounded-full text-xs font-semibold cursor-pointer ${tech.status === "Active" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}>{tech.status}</span>
                 </td>
                 <td className="px-6 py-4 text-right">
-                  <button className="text-blue-600 hover:underline mr-3">
-                    Edit
-                  </button>
-                  <button
-                    className="text-red-600 hover:underline"
-                    onClick={() => handleDelete(tech.id)}
-                  >
-                    Delete
-                  </button>
+                  <button className="text-blue-600 hover:underline mr-3" onClick={() => openEditModal(tech)}>Edit</button>
+                  <button className="text-red-600 hover:underline" onClick={() => openDeleteConfirm(tech)}>Delete</button>
                 </td>
               </tr>
             ))}
             {currentTechnicians.length === 0 && (
               <tr>
-                <td colSpan="6" className="text-center py-4 text-gray-500">
-                  No Technicians found
-                </td>
+                <td colSpan="6" className="text-center py-4 text-gray-500">No Technicians found</td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
 
-      {/* ✅ Pagination Component */}
-      <Pagination
-        currentPage={currentPage}
-        totalItems={filteredTechnicians.length}
-        itemsPerPage={itemsPerPage}
-        onPageChange={setCurrentPage}
-      />
+      {/* Pagination */}
+      <Pagination currentPage={currentPage} totalItems={filteredTechnicians.length} itemsPerPage={itemsPerPage} onPageChange={setCurrentPage} />
 
-      {/* Add Technician Modal */}
+      {/* Add/Edit Technician Modal */}
       {showModal && (
-        <AddTechnician
-          open={showModal}
-          setOpen={setShowModal}
-          newTech={newTech}
-          setNewTech={setNewTech}
-          handleAddTechnician={handleAddTechnician}
-        />
+        <AddTechnician open={showModal} setOpen={setShowModal} newTech={newTech} setNewTech={setNewTech} handleAddTechnician={handleAddOrUpdateTechnician} isEditing={isEditing} />
       )}
+
+      {/* Confirm Dialog (Delete) */}
+      <ConfirmDialog
+        open={confirmOpen}
+        setOpen={(val) => {
+          setConfirmOpen(val);
+          if (!val) setConfirmPayload(null);
+        }}
+        title={confirmPayload?.type === "delete" ? "Delete Technician" : "Confirm"}
+        message={confirmPayload?.type === "delete" ? `Are you sure you want to delete ${confirmPayload?.name || "this technician"}? This action cannot be undone.` : `Are you sure?`}
+        onConfirm={handleDeleteConfirmed}
+        confirmText="Yes, Delete"
+        cancelText="Cancel"
+      />
     </div>
   );
 }

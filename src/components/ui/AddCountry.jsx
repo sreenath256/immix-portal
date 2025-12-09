@@ -18,6 +18,42 @@ export default function AddCountry({
 }) {
   if (!open) return null;
 
+  // Mapping of countries to currencies (all lowercase keys for easier matching)
+  const countryCurrencyMap = {
+    usa: "USD",
+    india: "INR",
+    uae: "AED",
+    germany: "EUR",
+    france: "EUR",
+    uk: "GBP",
+    japan: "JPY",
+  };
+
+  // List of available currencies
+  const currencies = [
+    { code: "USD", label: "USD - US Dollar" },
+    { code: "INR", label: "INR - Indian Rupee" },
+    { code: "AED", label: "AED - UAE Dirham" },
+    { code: "EUR", label: "EUR - Euro" },
+    { code: "GBP", label: "GBP - British Pound" },
+    { code: "JPY", label: "JPY - Japanese Yen" },
+  ];
+
+  // Handle typing country name
+  const handleCountryChange = (value) => {
+    const updatedCountry = { ...newCountry, name: value };
+
+    // Normalize input to lowercase
+    const key = value.trim().toLowerCase();
+
+    // Auto-detect currency
+    if (countryCurrencyMap[key]) {
+      updatedCountry.currency = countryCurrencyMap[key];
+    }
+
+    setNewCountry(updatedCountry);
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
@@ -33,9 +69,7 @@ export default function AddCountry({
               {isEditing ? "Edit Country" : "Add Country"}
             </h3>
             <p className="mt-1 text-sm text-gray-500">
-              {isEditing
-                ? "Update country details."
-                : "Add a new country."}
+              {isEditing ? "Update country details." : "Add a new country."}
             </p>
           </div>
           <button
@@ -57,8 +91,32 @@ export default function AddCountry({
             <Input
               placeholder="Enter country name..."
               value={newCountry.name}
-              onChange={(e) => setNewCountry({ ...newCountry, name: e.target.value })}
+              onChange={(e) => handleCountryChange(e.target.value)}
             />
+          </div>
+
+          {/* Currency */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Currency
+            </label>
+            <Select
+              value={newCountry.currency}
+              onValueChange={(val) =>
+                setNewCountry({ ...newCountry, currency: val })
+              }
+            >
+              <SelectTrigger className="w-full h-10">
+                <SelectValue placeholder="Select currency" />
+              </SelectTrigger>
+              <SelectContent>
+                {currencies.map((c) => (
+                  <SelectItem key={c.code} value={c.code}>
+                    {c.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Status */}
@@ -68,7 +126,9 @@ export default function AddCountry({
             </label>
             <Select
               value={newCountry.status}
-              onValueChange={(val) => setNewCountry({ ...newCountry, status: val })}
+              onValueChange={(val) =>
+                setNewCountry({ ...newCountry, status: val })
+              }
             >
               <SelectTrigger className="w-full h-10">
                 <SelectValue placeholder="Select status" />

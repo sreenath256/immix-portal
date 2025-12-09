@@ -270,7 +270,7 @@ const [reports] = useState([
     {
         id: "WRK021",
         date: "2025-09-04",
-        technician: "Sam Indigo",
+        technician: "Sam green",
         dataCenter: "LA Data Center",
         client: "Tech Solutions Ltd.",
         hours: 7,

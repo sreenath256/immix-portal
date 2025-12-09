@@ -11,8 +11,6 @@ function TechnicianBottomNav() {
 
   const menuItems = [
     { to: "/technician", icon: <Home size={22} />, label: "Home" },
-    { to: "/technician/data-centers", icon: <BarChart2 size={22} />, label: "Data Centers" },
-    { to: "/technician/work", icon: <ClipboardList size={22} />, label: "My Work" },
     { to: "/technician/settings", icon: <Settings size={22} />, label: "Settings" },
   ];
 
@@ -25,7 +23,7 @@ function TechnicianBottomNav() {
             key={idx}
             to={item.to}
             className={`flex flex-col items-center justify-center gap-1 flex-1 py-1 rounded-md transition ${
-              active ? "text-indigo-600 font-medium" : "text-gray-500 hover:text-indigo-500"
+              active ? "text-green-600 font-medium" : "text-gray-500 hover:text-green-500"
             }`}
           >
             {item.icon}

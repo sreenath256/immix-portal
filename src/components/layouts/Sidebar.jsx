@@ -13,6 +13,8 @@ import {
   ChevronRight,
   ClipboardList,
   LineChart,
+  Building,
+  UsersRound,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -32,12 +34,12 @@ function Sidebar() {
         <div className="flex items-center justify-between p-4 border-b">
           <div className="flex items-center gap-2">
             <img
-              src="https://placehold.co/40x40/6366f1/white?text=I"
+              src="https://placehold.co/40x40/16a34a/white?text=I"
               alt="Logo"
               className="w-10 h-10 rounded-md"
             />
             {expanded && (
-              <span className="font-bold text-lg text-indigo-600">Immix</span>
+              <span className="font-bold text-lg text-green-600">Immix</span>
             )}
           </div>
           <button
@@ -59,6 +61,13 @@ function Sidebar() {
               to="/datacenters"
             />
             <SidebarItem
+              icon={<Building size={20} />}
+              text="Technician Companies"
+              to="/technician-companies"
+
+            />
+
+            {/* <SidebarItem
               icon={<MapPin size={20} />}
               text="Cities"
               to="/cities"
@@ -67,13 +76,17 @@ function Sidebar() {
               icon={<Globe size={20} />}
               text="Countries"
               to="/countries"
-            />
+            /> */}
             <SidebarItem
               icon={<UserCheck size={20} />}
               text="Field Technicians"
               to="/technicians"
             />
-
+            <SidebarItem
+              icon={<UsersRound size={20} />}
+              text="Client Engineers"
+              to="/client-engineers"
+            />
             {/* Reports Section */}
             <hr className="my-3 border-gray-200" />
             <SidebarItem
@@ -92,17 +105,19 @@ function Sidebar() {
               to="/reports"
             />
 
-            <hr className="my-3 border-gray-200" />
+
+
+            {/* <hr className="my-3 border-gray-200" />
             <SidebarItem
               icon={<Settings size={20} />}
               text="Settings"
               to="/settings"
-            />
-            <SidebarItem
+            /> */}
+            {/* <SidebarItem
               icon={<HelpCircle size={20} />}
               text="Help"
               to="/help"
-            />
+            /> */}
           </ul>
         </SidebarContext.Provider>
 
@@ -142,8 +157,8 @@ function SidebarItem({ icon, text, to, alert }) {
       <li
         className={`relative flex items-center gap-3 py-2 px-3 my-1 rounded-md cursor-pointer transition-all
           ${active
-            ? "bg-gradient-to-r from-indigo-100 to-indigo-50 text-indigo-700"
-            : "text-gray-600 hover:bg-indigo-50"
+            ? "bg-green-600 text-white hover:bg-green-700"
+            : "text-gray-600 hover:bg-green-50"
           }
         `}
       >
@@ -152,7 +167,7 @@ function SidebarItem({ icon, text, to, alert }) {
 
         {alert && (
           <span
-            className={`absolute right-3 w-2 h-2 rounded-full bg-indigo-400 ${expanded ? "top-3" : "top-2"
+            className={`absolute right-3 w-2 h-2 rounded-full bg-green-600 ${expanded ? "top-3" : "top-2"
               }`}
           />
         )}
@@ -160,7 +175,7 @@ function SidebarItem({ icon, text, to, alert }) {
         {/* Tooltip when collapsed */}
         {!expanded && (
           <span
-            className="absolute left-full ml-4 px-2 py-1 rounded-md bg-indigo-100 text-indigo-800 text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity"
+            className="absolute left-full ml-4 px-2 py-1 rounded-md bg-green-100 text-green-800 text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity"
           >
             {text}
           </span>

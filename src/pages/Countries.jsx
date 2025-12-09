@@ -10,32 +10,32 @@ import {
 } from "@/components/ui/select";
 import AddCountry from "../components/ui/AddCountry"; // popup component
 import Pagination from "../components/ui/Pagination"; // pagination component
+import ConfirmDialog from "../components/ui/ConfirmDialog"; // reusable confirm box
 import { useNavigate } from "react-router-dom";
 
-
 export default function CountriesList() {
-  // Sample 20 countries
+  // Sample 20 countries with currency
   const initialCountries = [
-    { id: "CO1001", name: "USA", status: "Active" },
-    { id: "CO1002", name: "India", status: "Active" },
-    { id: "CO1003", name: "UK", status: "Inactive" },
-    { id: "CO1004", name: "Canada", status: "Active" },
-    { id: "CO1005", name: "Germany", status: "Inactive" },
-    { id: "CO1006", name: "France", status: "Active" },
-    { id: "CO1007", name: "Australia", status: "Active" },
-    { id: "CO1008", name: "Japan", status: "Inactive" },
-    { id: "CO1009", name: "China", status: "Active" },
-    { id: "CO1010", name: "Brazil", status: "Active" },
-    { id: "CO1011", name: "Mexico", status: "Inactive" },
-    { id: "CO1012", name: "South Korea", status: "Active" },
-    { id: "CO1013", name: "Italy", status: "Active" },
-    { id: "CO1014", name: "Spain", status: "Inactive" },
-    { id: "CO1015", name: "Netherlands", status: "Active" },
-    { id: "CO1016", name: "Sweden", status: "Active" },
-    { id: "CO1017", name: "Norway", status: "Inactive" },
-    { id: "CO1018", name: "Switzerland", status: "Active" },
-    { id: "CO1019", name: "Russia", status: "Active" },
-    { id: "CO1020", name: "Egypt", status: "Inactive" },
+    { id: "CO1001", name: "USA", currency: "USD", status: "Active" },
+    { id: "CO1002", name: "India", currency: "INR", status: "Active" },
+    { id: "CO1003", name: "UK", currency: "GBP", status: "Inactive" },
+    { id: "CO1004", name: "Canada", currency: "CAD", status: "Active" },
+    { id: "CO1005", name: "Germany", currency: "EUR", status: "Inactive" },
+    { id: "CO1006", name: "France", currency: "EUR", status: "Active" },
+    { id: "CO1007", name: "Australia", currency: "AUD", status: "Active" },
+    { id: "CO1008", name: "Japan", currency: "JPY", status: "Inactive" },
+    { id: "CO1009", name: "China", currency: "CNY", status: "Active" },
+    { id: "CO1010", name: "Brazil", currency: "BRL", status: "Active" },
+    { id: "CO1011", name: "Mexico", currency: "MXN", status: "Inactive" },
+    { id: "CO1012", name: "South Korea", currency: "KRW", status: "Active" },
+    { id: "CO1013", name: "Italy", currency: "EUR", status: "Active" },
+    { id: "CO1014", name: "Spain", currency: "EUR", status: "Inactive" },
+    { id: "CO1015", name: "Netherlands", currency: "EUR", status: "Active" },
+    { id: "CO1016", name: "Sweden", currency: "SEK", status: "Active" },
+    { id: "CO1017", name: "Norway", currency: "NOK", status: "Inactive" },
+    { id: "CO1018", name: "Switzerland", currency: "CHF", status: "Active" },
+    { id: "CO1019", name: "Russia", currency: "RUB", status: "Active" },
+    { id: "CO1020", name: "Egypt", currency: "EGP", status: "Inactive" },
   ];
 
   const [countries, setCountries] = useState(initialCountries);
@@ -45,12 +45,16 @@ export default function CountriesList() {
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
 
-
   const [newCountry, setNewCountry] = useState({
     id: "",
     name: "",
+    currency: "",
     status: "Active",
   });
+
+  // Confirm delete states
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -78,13 +82,16 @@ export default function CountriesList() {
       setCountries([...countries, { ...newCountry, id: newId }]);
     }
 
-    setNewCountry({ id: "", name: "", status: "Active" });
+    setNewCountry({ id: "", name: "", currency: "", status: "Active" });
     setIsEditing(false);
     setShowModal(false);
   };
 
   // Delete Country
-  const handleDelete = (id) => setCountries(countries.filter((c) => c.id !== id));
+  const handleDelete = (id) => {
+    setCountries(countries.filter((c) => c.id !== id));
+    setDeleteId(null);
+  };
 
   // Toggle Status
   const handleToggleStatus = (id) =>
@@ -96,7 +103,7 @@ export default function CountriesList() {
 
   // Open Add Modal
   const openAddModal = () => {
-    setNewCountry({ id: "", name: "", status: "Active" });
+    setNewCountry({ id: "", name: "", currency: "", status: "Active" });
     setIsEditing(false);
     setShowModal(true);
   };
@@ -152,6 +159,7 @@ export default function CountriesList() {
             <tr>
               <th className="px-6 py-3">ID</th>
               <th className="px-6 py-3">Country</th>
+              <th className="px-6 py-3">Currency</th>
               <th className="px-6 py-3">Status</th>
               <th className="px-6 py-3 text-right">Actions</th>
             </tr>
@@ -169,12 +177,14 @@ export default function CountriesList() {
                 >
                   {ct.name}
                 </td>
+                <td className="px-6 py-4">{ct.currency || "-"}</td>
                 <td className="px-6 py-4">
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-semibold cursor-pointer ${ct.status === "Active"
+                    className={`px-2 py-1 rounded-full text-xs font-semibold cursor-pointer ${
+                      ct.status === "Active"
                         ? "bg-green-100 text-green-700"
                         : "bg-red-100 text-red-700"
-                      }`}
+                    }`}
                     onClick={() => handleToggleStatus(ct.id)}
                   >
                     {ct.status}
@@ -189,7 +199,10 @@ export default function CountriesList() {
                   </button>
                   <button
                     className="text-red-600 hover:underline"
-                    onClick={() => handleDelete(ct.id)}
+                    onClick={() => {
+                      setDeleteId(ct.id);
+                      setConfirmOpen(true);
+                    }}
                   >
                     Delete
                   </button>
@@ -198,7 +211,7 @@ export default function CountriesList() {
             ))}
             {currentCountries.length === 0 && (
               <tr>
-                <td colSpan="4" className="text-center py-4 text-gray-500">
+                <td colSpan="5" className="text-center py-4 text-gray-500">
                   No Countries found
                 </td>
               </tr>
@@ -224,6 +237,19 @@ export default function CountriesList() {
           setNewCountry={setNewCountry}
           handleAddCountry={handleSaveCountry}
           isEditing={isEditing}
+        />
+      )}
+
+      {/* Confirm Delete Modal */}
+      {confirmOpen && (
+        <ConfirmDialog
+          open={confirmOpen}
+          setOpen={setConfirmOpen}
+          title="Delete Country"
+          message="Are you sure you want to delete this country? This action cannot be undone."
+          confirmText="Yes, Delete"
+          cancelText="Cancel"
+          onConfirm={() => handleDelete(deleteId)}
         />
       )}
     </div>

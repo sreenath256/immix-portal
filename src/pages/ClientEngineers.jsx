@@ -8,90 +8,95 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import AddCity from "../components/ui/AddCity";
-import Pagination from "../components/ui/Pagination";
-import ConfirmDialog from "../components/ui/ConfirmDialog";
-import { useLocation } from "react-router-dom";
+import Pagination from "@/components/ui/Pagination";
+import ConfirmDialog from "@/components/ui/ConfirmDialog";
+import AddTechinicianCompany from "../components/ui/AddTechinicianCompany";
+import AddClientEngineers from "@/components/ui/AddClientEngineers";
 
-export default function CitiesList() {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const countryQuery = queryParams.get("country");
-
-  const allCountries = ["USA", "India", "UK", "Canada"];
-
-  // States
-  const [cities, setCities] = useState(
-    Array.from({ length: 30 }, (_, i) => ({
-      id: `CT${1000 + i + 1}`,
-      name: `City ${String.fromCharCode(65 + (i % 26))} ${i + 1}`,
-      country: allCountries[i % allCountries.length],
+export default function ClientEngineers() {
+  const [companies, setCompanies] = useState(
+    Array.from({ length: 20 }, (_, i) => ({
+      id: `CO${1000 + i + 1}`,
+      name: `Tech Serve Pvt Ltd ${i + 1}`,
+      contactPerson: `Manager ${i + 1}`,
+      phone: `98765${10000 + i}`,
+      email: `company${i + 1}@example.com`,
+      address: `Building ${i + 5}, Tech Park, City ${i + 1}`,
       status: i % 2 === 0 ? "Active" : "Inactive",
     }))
   );
+
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
-  const [countryFilter, setCountryFilter] = useState(countryQuery || "All");
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [newCity, setNewCity] = useState({
+  const [newCompany, setNewCompany] = useState({
     id: "",
     name: "",
-    country: "",
+    contactPerson: "",
+    phone: "",
+    email: "",
+    address: "",
     status: "Active",
   });
 
-  // Delete confirmation states
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
 
-  // Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const citiesPerPage = 10;
+  const companiesPerPage = 10;
 
-  // Filter cities
-  const filteredCities = cities.filter((ct) => {
+  // Filter logic
+  const filteredCompanies = companies.filter((c) => {
     const matchesSearch =
-      ct.name.toLowerCase().includes(search.toLowerCase()) ||
-      ct.country.toLowerCase().includes(search.toLowerCase());
+      c.name.toLowerCase().includes(search.toLowerCase()) ||
+      c.contactPerson.toLowerCase().includes(search.toLowerCase()) ||
+      c.phone.includes(search) ||
+      c.email.toLowerCase().includes(search.toLowerCase());
 
-    const matchesStatus = statusFilter === "All" || ct.status === statusFilter;
+    const matchesStatus = statusFilter === "All" || c.status === statusFilter;
 
-    const matchesCountry =
-      countryFilter === "All" || ct.country === countryFilter;
-
-    return matchesSearch && matchesStatus && matchesCountry;
+    return matchesSearch && matchesStatus;
   });
 
-  const indexOfLast = currentPage * citiesPerPage;
-  const indexOfFirst = indexOfLast - citiesPerPage;
-  const currentCities = filteredCities.slice(indexOfFirst, indexOfLast);
+  const indexOfLast = currentPage * companiesPerPage;
+  const indexOfFirst = indexOfLast - companiesPerPage;
+  const currentCompanies = filteredCompanies.slice(indexOfFirst, indexOfLast);
 
-  // Add or Update City
-  const handleSaveCity = () => {
-    if (!newCity.name || !newCity.country) return;
+  // Save company
+  const handleSaveCompany = () => {
+    if (!newCompany.name || !newCompany.phone || !newCompany.email) return;
 
     if (isEditing) {
-      setCities(cities.map((c) => (c.id === newCity.id ? newCity : c)));
+      setCompanies(
+        companies.map((c) => (c.id === newCompany.id ? newCompany : c))
+      );
     } else {
-      const newId = `CT${1000 + cities.length + 1}`;
-      setCities([...cities, { ...newCity, id: newId }]);
+      const newId = `CO${1000 + companies.length + 1}`;
+      setCompanies([...companies, { ...newCompany, id: newId }]);
     }
 
-    setNewCity({ id: "", name: "", country: "", status: "Active" });
+    setNewCompany({
+      id: "",
+      name: "",
+      contactPerson: "",
+      phone: "",
+      email: "",
+      address: "",
+      status: "Active",
+    });
     setIsEditing(false);
     setShowModal(false);
   };
 
-  // Delete City
   const handleDelete = (id) => {
-    setCities(cities.filter((c) => c.id !== id));
+    setCompanies(companies.filter((c) => c.id !== id));
     setDeleteId(null);
   };
 
   const handleToggleStatus = (id) =>
-    setCities(
-      cities.map((c) =>
+    setCompanies(
+      companies.map((c) =>
         c.id === id
           ? { ...c, status: c.status === "Active" ? "Inactive" : "Active" }
           : c
@@ -99,13 +104,21 @@ export default function CitiesList() {
     );
 
   const openAddModal = () => {
-    setNewCity({ id: "", name: "", country: "", status: "Active" });
+    setNewCompany({
+      id: "",
+      name: "",
+      contactPerson: "",
+      phone: "",
+      email: "",
+      address: "",
+      status: "Active",
+    });
     setIsEditing(false);
     setShowModal(true);
   };
 
-  const openEditModal = (city) => {
-    setNewCity(city);
+  const openEditModal = (company) => {
+    setNewCompany(company);
     setIsEditing(true);
     setShowModal(true);
   };
@@ -114,11 +127,10 @@ export default function CitiesList() {
     <div className="p-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between md:items-center mb-6 gap-3">
-        <h2 className="text-2xl font-semibold">Cities</h2>
+        <h2 className="text-2xl font-semibold">Client Engineers</h2>
         <div className="flex flex-wrap gap-2 items-center">
-          {/* Search */}
           <Input
-            placeholder="Search by City or Country..."
+            placeholder="Search by name, contact, email..."
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
@@ -127,28 +139,6 @@ export default function CitiesList() {
             className="h-10"
           />
 
-          {/* Country Filter */}
-          <Select
-            value={countryFilter}
-            onValueChange={(val) => {
-              setCountryFilter(val);
-              setCurrentPage(1);
-            }}
-          >
-            <SelectTrigger className="h-10 w-[200px] outline-none">
-              <SelectValue placeholder="All Countries" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="All">All Countries</SelectItem>
-              {allCountries.map((country) => (
-                <SelectItem key={country} value={country}>
-                  {country}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          {/* Status Filter */}
           <Select
             value={statusFilter}
             onValueChange={(val) => {
@@ -171,7 +161,7 @@ export default function CitiesList() {
             onClick={openAddModal}
             className="h-10 min-w-[150px]"
           >
-            + Add City
+            + Add Engineer
           </Button>
         </div>
       </div>
@@ -182,46 +172,46 @@ export default function CitiesList() {
           <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
             <tr>
               <th className="px-6 py-3">ID</th>
-              <th className="px-6 py-3">City</th>
-              <th className="px-6 py-3">Country</th>
+              <th className="px-6 py-3">Engineer Name</th>
+              <th className="px-6 py-3">Phone</th>
+              <th className="px-6 py-3">Email</th>
               <th className="px-6 py-3">Status</th>
               <th className="px-6 py-3 text-right">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {currentCities.map((ct, idx) => (
+            {currentCompanies.map((c, idx) => (
               <tr
-                key={ct.id}
-                className={`border-b ${
-                  idx % 2 === 0 ? "bg-white" : "bg-gray-50"
-                }`}
+                key={c.id}
+                className={`border-b ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"}`}
               >
-                <td className="px-6 py-4 font-medium">{ct.id}</td>
-                <td className="px-6 py-4">{ct.name}</td>
-                <td className="px-6 py-4">{ct.country}</td>
+                <td className="px-6 py-4 font-medium">{c.id}</td>
+                <td className="px-6 py-4">{c.name}</td>
+                <td className="px-6 py-4">{c.phone}</td>
+                <td className="px-6 py-4">{c.email}</td>
                 <td className="px-6 py-4">
                   <span
                     className={`px-2 py-1 rounded-full text-xs font-semibold cursor-pointer ${
-                      ct.status === "Active"
+                      c.status === "Active"
                         ? "bg-green-100 text-green-700"
                         : "bg-red-100 text-red-700"
                     }`}
-                    onClick={() => handleToggleStatus(ct.id)}
+                    onClick={() => handleToggleStatus(c.id)}
                   >
-                    {ct.status}
+                    {c.status}
                   </span>
                 </td>
                 <td className="px-6 py-4 text-right">
                   <button
                     className="text-blue-600 hover:underline mr-3"
-                    onClick={() => openEditModal(ct)}
+                    onClick={() => openEditModal(c)}
                   >
                     Edit
                   </button>
                   <button
                     className="text-red-600 hover:underline"
                     onClick={() => {
-                      setDeleteId(ct.id);
+                      setDeleteId(c.id);
                       setConfirmOpen(true);
                     }}
                   >
@@ -230,10 +220,10 @@ export default function CitiesList() {
                 </td>
               </tr>
             ))}
-            {currentCities.length === 0 && (
+            {currentCompanies.length === 0 && (
               <tr>
-                <td colSpan="5" className="text-center py-4 text-gray-500">
-                  No Cities found
+                <td colSpan="7" className="text-center py-4 text-gray-500">
+                  No Companies found
                 </td>
               </tr>
             )}
@@ -244,31 +234,30 @@ export default function CitiesList() {
       {/* Pagination */}
       <Pagination
         currentPage={currentPage}
-        totalItems={filteredCities.length}
-        itemsPerPage={citiesPerPage}
+        totalItems={filteredCompanies.length}
+        itemsPerPage={companiesPerPage}
         onPageChange={setCurrentPage}
       />
 
       {/* Add/Edit Modal */}
       {showModal && (
-        <AddCity
+        <AddClientEngineers
           open={showModal}
           setOpen={setShowModal}
-          newCity={newCity}
-          setNewCity={setNewCity}
-          handleAddCity={handleSaveCity}
-          countries={allCountries}
+          newCompany={newCompany}
+          setNewCompany={setNewCompany}
+          handleAddCompany={handleSaveCompany}
           isEditing={isEditing}
         />
       )}
 
-      {/* Confirm Delete Modal */}
+      {/* Confirm Delete */}
       {confirmOpen && (
         <ConfirmDialog
           open={confirmOpen}
           setOpen={setConfirmOpen}
-          title="Delete City"
-          message="Are you sure you want to delete this city? This action cannot be undone."
+          title="Delete Company"
+          message="Are you sure you want to delete this company? This action cannot be undone."
           confirmText="Yes, Delete"
           cancelText="Cancel"
           onConfirm={() => handleDelete(deleteId)}

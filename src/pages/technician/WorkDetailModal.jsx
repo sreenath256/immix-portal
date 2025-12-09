@@ -1,8 +1,21 @@
-import React, { useState } from "react";
-import BillViewer from "@/components/ui/BillViewer"; // existing fullscreen bill viewer
+import React, { useState, useEffect } from "react";
+import BillViewer from "@/components/ui/BillViewer";
 
 const WorkDetailModal = ({ data, onClose }) => {
   const [previewBill, setPreviewBill] = useState({ open: false, bills: [] });
+  const [hours, setHours] = useState(0);
+
+  // ✅ Hooks must always run, even if data is null
+  useEffect(() => {
+    if (data && data.startTime && data.endTime) {
+      const start = new Date(`1970-01-01T${data.startTime}`);
+      const end = new Date(`1970-01-01T${data.endTime}`);
+      const diff = (end - start) / (1000 * 60 * 60); // convert ms to hours
+      setHours(diff > 0 ? diff.toFixed(2) : 0);
+    } else {
+      setHours(0);
+    }
+  }, [data]);
 
   if (!data) return null;
 
@@ -53,7 +66,22 @@ const WorkDetailModal = ({ data, onClose }) => {
           <p><b>Client:</b> {data.client}</p>
           <p><b>Data Center:</b> {data.dataCenter}</p>
           <p><b>Workers:</b> {data.workers}</p>
-          <p><b>Hours:</b> {data.hours}</p>
+
+          {/* Time Fields */}
+          <p><b>Starting Time:</b> {data.startTime || "Not Provided"}</p>
+          <p><b>Ending Time:</b> {data.endTime || "Not Provided"}</p>
+          <p><b>Total Hours:</b> {hours} hrs</p>
+
+          {/* Description */}
+          <div className="mt-3">
+            <b>Description:</b>
+            <p className="mt-1 text-gray-700 whitespace-pre-line">
+              {data.description && data.description.trim() !== ""
+                ? data.description
+                : "Not Provided"}
+            </p>
+          </div>
+
           <p><b>Created At:</b> {new Date(data.createdAt).toLocaleString()}</p>
           <p><b>Updated At:</b> {new Date(data.updatedAt).toLocaleString()}</p>
 
